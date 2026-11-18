@@ -23,8 +23,8 @@ Skript ověřuje:
 
 ### Automatické ověření - poslední běh
 
-Doplní se skutečný výstup příkazů při posledním běhu. Příkazy byly spuštěny
-z kořene `domaci-ukol-agent`:
+Zaznamenaný skutečný výstup posledního běhu. Příkazy byly spuštěny z kořene
+`domaci-ukol-agent`:
 
 ```text
 $ bash dokumentace/overeni.sh
@@ -34,7 +34,7 @@ OK: front matter Skills je platný a obě sady názvů jsou stejné.
 OK: nejsou nalezeny zakázané pluginy, rozpoznatelná tajemství ani sledované lokální soubory.
 ....
 ----------------------------------------------------------------------
-Ran 4 tests in 0.000s
+Ran 4 tests in 0.001s
 
 OK
 OK: automatické ověření dokončeno.
