@@ -1,0 +1,29 @@
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[features]
+multi_agent = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+
+[mcp_servers.filesystem]
+command = "npx"
+args = [
+  "-y",
+  "@modelcontextprotocol/server-filesystem",
+  "/workspaces/vibe_coding_laba/domaci-ukol-agent",
+]
+
+[mcp_servers.git]
+command = "uvx"
+args = [
+  "mcp-server-git",
+  "--repository",
+  "/workspaces/vibe_coding_laba",
+]
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PERSONAL_ACCESS_TOKEN"

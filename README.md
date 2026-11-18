@@ -1,3 +1,8 @@
+## Domácí úkol: nastavení kódovacího agenta
+
+Vypracování je ve složce [domaci-ukol-agent](domaci-ukol-agent/README.md)
+(Codex + Claude Code, MCP servery, Skills, 4 subagenti, bez plugins a marketplace).
+
 # vibe_coding_laba
 
 Ukázkový Python skript pro volání LLM API s nástrojem (function calling).
