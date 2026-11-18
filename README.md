@@ -1,10 +1,5 @@
 # vibe_coding_laba
 
-## Domácí úkol: nastavení kódovacího agenta
-
-Vypracování je ve složce [domaci-ukol-agent](domaci-ukol-agent/README.md)
-(Codex + Claude Code, MCP servery, Skills, 4 subagenti, bez plugins a marketplace).
-
 Ukázkový Python skript pro volání LLM API s nástrojem (function calling).
 Model může zavolat vestavěnou kalkulačku a následně použít její výsledek ve
 své odpovědi.
@@ -108,3 +103,10 @@ export OPENAI_MODEL="gpt-4o-mini"
   nebo `py` (Windows).
 
 Skript používá nástroj `calculate` pro sčítání, odčítání, násobení a dělení.
+
+---
+
+## Domácí úkol 2: nastavení kódovacího agenta
+
+Vypracování je ve složce [domaci-ukol-agent](domaci-ukol-agent/README.md)
+(Codex + Claude Code, MCP servery, Skills, 4 subagenti, bez plugins a marketplace).
