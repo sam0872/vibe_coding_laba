@@ -2,7 +2,13 @@
 
 ## Příprava prostředí
 
-Potřebuješ Node.js s příkazem `npx` a uv s příkazem `uvx`.
+Potřebuješ Node.js s příkazem `npx`, Python 3.11 nebo novější
+(ověřovací skript používá `tomllib`) a uv s příkazem `uvx`.
+Pokud příkaz `uvx` chybí, uv nainstaluj:
+
+```bash
+python3 -m pip install --user uv
+```
 Nejmenší relevantní ověření Python změny je:
 
 ```bash

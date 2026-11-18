@@ -1,8 +1,8 @@
+# Domácí úkol: nastavení kódovacího agenta
+
 ## Odevzdání
 
 https://github.com/sam0872/vibe_coding_laba/tree/main/domaci-ukol-agent
-
-# Domácí úkol: nastavení kódovacího agenta
 
 Tato složka je samostatné vypracování domácího úkolu o nastavení kódovacích
 agentů **Codex** a **Claude Code**.

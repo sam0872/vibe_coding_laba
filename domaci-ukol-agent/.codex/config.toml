@@ -5,7 +5,7 @@ sandbox_mode = "workspace-write"
 multi_agent = true
 
 [agents]
-max_threads = 4
+max_threads = 6
 max_depth = 1
 
 [mcp_servers.filesystem]

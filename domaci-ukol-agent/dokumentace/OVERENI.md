@@ -10,11 +10,15 @@ bash dokumentace/overeni.sh
 
 Skript ověřuje:
 
+- verzi Pythonu >= 3.11 a dostupnost `tomllib`;
 - existenci základních souborů konfigurace a instrukcí;
 - syntaxi `.mcp.json`, `.claude/settings.json` a TOML konfigurací Codexu;
 - shodu názvů MCP serverů mezi `.mcp.json` a `.claude/settings.json`;
+- shodu názvů MCP serverů mezi `.codex/config.toml` a `.mcp.json`;
 - nejméně čtyři Codex a čtyři Claude subagenty, jejich povinná metadata a
   shodu jejich názvů;
+- u Claude subagentů, které v instrukcích zmiňují `diff`, přítomnost MCP git
+  nástroje nebo `Bash`;
 - front matter a shodu názvů Skills v obou adresářových stromech;
 - nepřítomnost `.claude-plugin`, `.codex-plugin` a `marketplace.json`;
 - nepřítomnost rozpoznatelných vzorů tajemství v projektových souborech;
@@ -34,7 +38,7 @@ OK: front matter Skills je platný a obě sady názvů jsou stejné.
 OK: nejsou nalezeny zakázané pluginy, rozpoznatelná tajemství ani sledované lokální soubory.
 ....
 ----------------------------------------------------------------------
-Ran 4 tests in 0.001s
+Ran 4 tests in 0.000s
 
 OK
 OK: automatické ověření dokončeno.
@@ -46,7 +50,7 @@ test_vydel_bezne_hodnoty (ukazka.test_kalkulacka.TestKalkulacka.test_vydel_bezne
 test_vydel_nulou (ukazka.test_kalkulacka.TestKalkulacka.test_vydel_nulou) ... ok
 
 ----------------------------------------------------------------------
-Ran 4 tests in 0.000s
+Ran 4 tests in 0.001s
 
 OK
 ```
@@ -59,31 +63,31 @@ python3 -m unittest discover -s ukazka -t . -v
 
 ## Ruční ověření v agentech
 
-Spusť v terminálu z této složky a doplň skutečný výstup:
-
 ```text
 $ codex mcp list
-[výstup doplnit]
+Neověřeno: codex není v tomto Codespace nainstalován.
 
 $ codex features list
-[výstup doplnit]
+Neověřeno: codex není v tomto Codespace nainstalován.
 
 $ claude mcp list
-[výstup doplnit]
+Neověřeno: claude není v tomto Codespace nainstalován.
 ```
 
 V Claude Code spusť `/mcp`, `/agents` a `/skills`; výsledky doplň sem:
 
 ```text
-/mcp: [výstup doplnit]
-/agents: [výstup doplnit]
-/skills: [výstup doplnit]
+/mcp: Neověřeno: vyžaduje interaktivní relaci, doplní autor ručně
+/agents: Neověřeno: vyžaduje interaktivní relaci, doplní autor ručně
+/skills: Neověřeno: vyžaduje interaktivní relaci, doplní autor ručně
 ```
 
 ## Co zatím není ověřeno
 
-- Ruční načtení MCP serverů, agentů a Skills v běžících aplikacích Codex a
-  Claude Code není součástí automatického skriptu.
+- CLI `codex` a `claude` nejsou v tomto Codespace nainstalované, takže jejich
+  interaktivní příkazy ani MCP seznamy nebylo možné ověřit.
+- Ruční načtení MCP serverů, agentů a Skills v Claude Code není součástí
+  automatického skriptu.
 - GitHub MCP vyžaduje `GITHUB_PERSONAL_ACCESS_TOKEN`; bez něj nelze ověřit
   připojení ke GitHubu.
 - Automatický skript nekontroluje celou historii Gitu. Kontrola historie se

@@ -61,3 +61,4 @@ Vedoucí agent integruje jejich výsledky a finální rozhodnutí přijme sám.
 
 Instrukce → Skill `python-change` → MCP git (diff) → subagenti `code-reviewer`
 a `test-runner` → vedoucí agent ověří tvrzení a shrne výsledek.
+Subagent `code-reviewer` čte diff přes MCP git, tedy využívá MCP.

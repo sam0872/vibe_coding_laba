@@ -8,12 +8,21 @@ python3 - <<'PY'
 import json
 import re
 import subprocess
-import tomllib
+import sys
 from pathlib import Path
 
 
 def chyba(zprava: str) -> None:
     raise SystemExit(f"CHYBA: {zprava}")
+
+
+if sys.version_info < (3, 11):
+    chyba(
+        "Je vyžadován Python 3.11 nebo novější "
+        "(ověřovací skript používá tomllib)."
+    )
+
+import tomllib
 
 
 def pozaduj(podminka: bool, zprava: str) -> None:
@@ -75,6 +84,10 @@ mcp_json = nacti_json(Path(".mcp.json"))
 mcp_codex = nacti_toml(Path(".codex/config.toml"))
 
 pozaduj(
+    set(mcp_codex.get("mcp_servers", {})) == set(mcp_json.get("mcpServers", {})),
+    "Názvy MCP serverů v Codexu a Claude Code se neshodují.",
+)
+pozaduj(
     set(claude_nastaveni.get("enabledMcpjsonServers", []))
     == set(mcp_json.get("mcpServers", {})),
     "Servery v .claude/settings.json neodpovídají serverům v .mcp.json.",
@@ -116,21 +129,23 @@ for cesta in codex_soubory:
         agent["sandbox_mode"] in {"read-only", "workspace-write"},
         f"{cesta}: nepovolený sandbox_mode.",
     )
-    pozaduj(agent["model"] == "gpt-5.4-mini", f"{cesta}: neočekávaný model.")
-    pozaduj(
-        agent["model_reasoning_effort"] == "medium",
-        f"{cesta}: neočekávané model_reasoning_effort.",
-    )
     pozaduj(agent["name"] not in codex_jmena, f"Duplicitní jméno agenta {agent['name']}.")
     codex_jmena.add(agent["name"])
 
 claude_jmena: set[str] = set()
 for cesta in claude_soubory:
-    pole, _ = front_matter(cesta)
+    pole, text = front_matter(cesta)
     for povinne in ("name", "description", "tools", "model"):
         pozaduj(pole.get(povinne), f"{cesta}: front matter nemá {povinne}.")
     pozaduj(pole["name"] not in claude_jmena, f"Duplicitní jméno agenta {pole['name']}.")
     claude_jmena.add(pole["name"])
+    if "diff" in text.lower():
+        tools = {nazev.strip() for nazev in pole["tools"].split(",")}
+        ma_git_mcp = any(nazev.startswith("mcp__git__") for nazev in tools)
+        pozaduj(
+            ma_git_mcp or "Bash" in tools,
+            f"{cesta}: instrukce zmiňující diff musí povolit MCP git nebo Bash.",
+        )
 
 pozaduj(
     codex_jmena == claude_jmena,

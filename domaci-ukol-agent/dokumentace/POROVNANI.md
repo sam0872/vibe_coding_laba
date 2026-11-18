@@ -23,10 +23,10 @@ Vypracování pokrývá MCP servery, Skills, subagenty a instrukce pro oba
 kódovací agenty. Není kompletní kopií kurzu; žádné lektorovy soubory nejsou
 součástí tohoto veřejného repozitáře.
 
-Úkol vědomě nekopíruje lektorovo `approval_policy = "never"` spolu se
-`sandbox_mode = "danger-full-access"` ani natvrdo zapsaný API klíč z lekce
-`02_mcp`. Klíč zde není uveden ani částečně. Místo toho jsou použita
-omezenější oprávnění a předávání tokenu přes environment proměnnou.
+Ukázky v kurzu jsou demonstrační a používají plná oprávnění
+(approval_policy = "never", sandbox_mode = "danger-full-access").
+Toto vypracování volí omezenější oprávnění a všechny tokeny předává
+výhradně přes proměnné prostředí.
 
 Projekt nepřidává hooks, custom models, observability, plugins ani marketplace,
 protože tyto oblasti nejsou součástí požadovaného rozsahu.

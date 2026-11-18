@@ -41,11 +41,12 @@ GitHub token musí být dostupný pouze v environment proměnné
 
 ## Subagenti
 
-- `code-reviewer` (`Read`, `Grep`, `Glob`) kontroluje diff; neprovádí editace.
+- `code-reviewer` (`Read`, `Grep`, `Glob` a nástroje MCP git pro status, diff a
+  historii) čte diff přes MCP git; neprovádí editace ani změny repozitáře.
 - `test-runner` (`Read`, `Bash`) spouští ověření; nesmí upravovat zdroje, testy
   ani konfiguraci.
-- `security-auditor` (`Read`, `Grep`, `Glob`, `Bash`) kontroluje bezpečnost;
-  Bash smí použít jen pro `git log -p`, bez úprav.
+- `security-auditor` (`Read`, `Grep`, `Glob`, `mcp__git__git_log`,
+  `mcp__git__git_show`) čte historii přes MCP git a kontroluje bezpečnost; bez úprav.
 - `docs-checker` (`Read`, `Grep`, `Glob`) ověřuje tvrzení dokumentace.
 
 Subagenti pracují na vymezeném úkolu bez vlastní editace. Vedoucí agent integruje
@@ -55,3 +56,4 @@ jejich výstupy, ověří tvrzení a provede potřebné změny.
 
 Instrukce → Skill `python-change` → MCP git (diff) → subagenti `code-reviewer`
 a `test-runner` → vedoucí agent ověří tvrzení a shrne výsledek.
+Subagent `code-reviewer` čte diff přes MCP git, tedy využívá MCP.
