@@ -39,6 +39,7 @@ domaci-ukol-agent/
 │   ├── kalkulacka.py
 │   └── test_kalkulacka.py
 └── dokumentace/
+    ├── BEH_CLAUDE_CODE.md
     ├── NAVOD.md
     ├── OVERENI.md
     ├── POROVNANI.md
@@ -88,9 +89,10 @@ Markdown definice.
 | Claude subagenti | Čtyři subagenti s omezenými nástroji | [.claude/agents/](.claude/agents/) |
 | Ukázkový Python kód a testy | `unittest` pro běžné i chybové stavy | [ukazka/](ukazka/) |
 | Nastavení oprávnění Claude Code | Projektový `settings.json` | [.claude/settings.json](.claude/settings.json) |
-| Ignorování lokálních souborů | `.gitignore` v této složce | [.gitignore](.gitignore) |
+| Ignorování lokálních souborů | `.gitignore` v této složce a v kořeni repozitáře | [.gitignore](.gitignore) |
 | Bezpečnost | Environment proměnné, kontroly tajemství | [dokumentace/OVERENI.md](dokumentace/OVERENI.md) |
 | Bez plugins a marketplace | Žádné pluginy ani marketplace | [dokumentace/POROVNANI.md](dokumentace/POROVNANI.md) |
+| Skutečný běh Claude Code | Záznam relace | [dokumentace/BEH_CLAUDE_CODE.md](dokumentace/BEH_CLAUDE_CODE.md) |
 
 ## Navržený pracovní postup
 

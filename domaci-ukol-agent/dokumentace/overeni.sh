@@ -70,6 +70,7 @@ for cesta in (
     Path(".claude/settings.json"),
     Path(".codex/config.toml"),
     Path(".mcp.json"),
+    Path("dokumentace/BEH_CLAUDE_CODE.md"),
     Path("dokumentace/NAVOD.md"),
     Path("dokumentace/OVERENI.md"),
     Path("dokumentace/POROVNANI.md"),
@@ -108,6 +109,31 @@ pozaduj(
 )
 print("OK: JSON, TOML a názvy MCP serverů jsou platné.")
 
+opravneni = claude_nastaveni.get("permissions", {})
+povoleno = set(opravneni.get("allow", []))
+dotaz = set(opravneni.get("ask", []))
+pozaduj(
+    "mcp__git" not in povoleno,
+    ".claude/settings.json: allow nesmí povolovat celý server \"mcp__git\"; "
+    "vyjmenuj jen čtecí nástroje.",
+)
+pozaduj(
+    "mcp__filesystem" not in povoleno,
+    ".claude/settings.json: allow nesmí povolovat celý server \"mcp__filesystem\"; "
+    "vyjmenuj jen nástroje bez čtení obsahu a zápisu.",
+)
+for nastroj in (
+    "git_add",
+    "git_commit",
+    "git_reset",
+    "git_checkout",
+    "git_create_branch",
+):
+    nazev = f"mcp__git__{nastroj}"
+    pozaduj(nazev not in povoleno, f".claude/settings.json: {nazev} nesmí být v allow.")
+    pozaduj(nazev in dotaz, f".claude/settings.json: {nazev} musí být v ask.")
+print("OK: zapisovací nástroje MCP git nejsou předschválené a jsou v ask.")
+
 codex_soubory = sorted(Path(".codex/agents").glob("*.toml"))
 claude_soubory = sorted(Path(".claude/agents").glob("*.md"))
 pozaduj(len(codex_soubory) >= 4, "V .codex/agents/ musí být alespoň čtyři agenti.")
@@ -145,6 +171,12 @@ for cesta in claude_soubory:
         pozaduj(
             ma_git_mcp or "Bash" in tools,
             f"{cesta}: instrukce zmiňující diff musí povolit MCP git nebo Bash.",
+        )
+    if "git log -p" in text:
+        tools = {nazev.strip() for nazev in pole["tools"].split(",")}
+        pozaduj(
+            "Bash" in tools,
+            f"{cesta}: instrukce vyžaduje `git log -p`, ale subagent nemá Bash.",
         )
 
 pozaduj(
@@ -223,6 +255,23 @@ zakazane_sledovane = [
 pozaduj(
     not zakazane_sledovane,
     "Git sleduje zakázané lokální soubory: " + ", ".join(zakazane_sledovane),
+)
+try:
+    koren_repozitare = subprocess.run(
+        ["git", "rev-parse", "--show-toplevel"],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+except (OSError, subprocess.CalledProcessError) as chyba_gitu:
+    chyba(f"Nelze zjistit kořen repozitáře: {chyba_gitu}")
+ignorovano = subprocess.run(
+    ["git", "check-ignore", "-q", ".env"],
+    cwd=koren_repozitare,
+)
+pozaduj(
+    ignorovano.returncode == 0,
+    "Soubor .env v kořeni repozitáře není ignorovaný (chybí kořenový .gitignore).",
 )
 print("OK: nejsou nalezeny zakázané pluginy, rozpoznatelná tajemství ani sledované lokální soubory.")
 PY

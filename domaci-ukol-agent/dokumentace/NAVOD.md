@@ -49,8 +49,9 @@ git clone https://github.com/sam0872/vibe_coding_laba.git
 cd vibe_coding_laba/domaci-ukol-agent
 ```
 
-V `.codex/config.toml` a `.mcp.json` nahraď absolutní cesty
-`/workspaces/vibe_coding_laba` skutečnou cestou ke klonu. U MCP filesystem
+V `.codex/config.toml`, `.mcp.json`, `.codex/agents/code-reviewer.toml`,
+`.claude/agents/code-reviewer.md` a `.claude/agents/security-auditor.md`
+nahraď absolutní cesty `/workspaces/vibe_coding_laba` skutečnou cestou ke klonu. U MCP filesystem
 nastav kořen této složky a u MCP git kořen repozitáře.
 
 ## Codex
@@ -76,9 +77,28 @@ Claude Code načítá konfiguraci MCP z `.mcp.json` a nastavení oprávnění z
 `.claude/settings.json`. Subagenti jsou v `.claude/agents/`, Skills v
 `.claude/skills/`.
 
-GitHub MCP a `git push` jsou záměrně v `ask`, protože jde o zápis do veřejné
-vzdálené služby. Lokální osobní nastavení patří do
+V `ask` jsou záměrně:
+
+- GitHub MCP a `git push`, protože jde o zápis do veřejné vzdálené služby;
+- `git commit` přes Bash i zapisovací nástroje MCP git (`git_add`,
+  `git_commit`, `git_reset`, `git_checkout`, `git_create_branch`), aby se před
+  commitem vždy provedla kontrola;
+- nástroje MCP filesystem, které čtou obsah nebo zapisují (`deny` pro `.env`
+  platí jen pro nástroj `Read`, ne pro MCP);
+- úpravy `.claude/`, `.codex/`, `.mcp.json` a `.gitignore`, aby si agent sám
+  nerozšířil oprávnění.
+
+V `allow` jsou jen čtecí nástroje MCP git a nástroje MCP filesystem, které
+nečtou obsah souborů. Lokální osobní nastavení patří do
 `.claude/settings.local.json`, který se necommituje.
+
+Kontrola načtení konfigurace v Claude Code:
+
+- `/mcp` ukáže stav MCP serverů z `.mcp.json`.
+- Příkaz `/agents` v Claude Code 2.1.327 už neexistuje (průvodce byl
+  odstraněn). Seznam projektových subagentů a Skills zjistíš tak, že se
+  Clauda zeptáš, například: „Vypiš projektové subagenty a projektové Skills,
+  u každého název, popis a soubor. Nic nespouštěj.“
 
 Ukázkové prompty:
 

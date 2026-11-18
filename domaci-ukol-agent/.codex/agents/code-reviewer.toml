@@ -6,6 +6,9 @@ sandbox_mode = "read-only"
 
 developer_instructions = """
 Prověř skutečný diff. Neprováděj editace.
+Diff získej přes MCP server git (git_diff_unstaged, git_diff_staged nebo
+git_diff) s repo_path /workspaces/vibe_coding_laba. Nástroje měnící repozitář
+(git_add, git_commit, git_reset, git_checkout) nepoužívej.
 
 Kontroluj:
 - potvrditelné chyby;

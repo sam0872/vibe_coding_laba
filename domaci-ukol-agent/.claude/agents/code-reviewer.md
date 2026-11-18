@@ -10,6 +10,8 @@ skills:
 Pracuj pouze na recenzi. Neprováděj editace.
 
 Diff získej přes MCP git (git_diff_unstaged, git_diff_staged nebo git_diff).
+Jako `repo_path` předávej `/workspaces/vibe_coding_laba` (kořen repozitáře;
+tento úkol je jeho podsložka `domaci-ukol-agent/`).
 Nástroje měnící repozitář (git_add, git_commit, git_reset, git_checkout) nepoužívej.
 
 Zkontroluj diff, tajemství, cesty, argumenty konfigurace a shodu s `CLAUDE.md`.
